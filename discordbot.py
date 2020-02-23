@@ -12,10 +12,10 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity=discord.Game(name='h?help | debug mode'))
+    await client.change_presence(activity=discord.Game(name='h?help | v1.0β'))
 
     # or, for watching:
-    activity = discord.Activity(name='h?help | debug mode', type=discord.ActivityType.watching)
+    activity = discord.Activity(name='h?help | v1.0β', type=discord.ActivityType.watching)
     await client.change_presence(activity=activity)
 
     channel = client.get_channel(680727914614095903)
