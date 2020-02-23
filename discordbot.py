@@ -12,10 +12,10 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity=discord.Game(name='h?help | v1.0β'))
+    await client.change_presence(activity=discord.Game(name='h?help | v1.0.1'))
 
     # or, for watching:
-    activity = discord.Activity(name='h?help | v1.0β', type=discord.ActivityType.playing)
+    activity = discord.Activity(name='h?help | v1.0.1', type=discord.ActivityType.playing)
     await client.change_presence(activity=activity)
 
     channel = client.get_channel(680727914614095903)
@@ -38,6 +38,7 @@ async def on_message(message):
 
         > `h?help` helpメニューを表示します
         > `h?pong` pong! と返してくれます。 **＊管理者権限が必要です。**
+        > `h?invite` ボット招待URLを表示します。
         > 挨拶してみてね！( ひらがなで)
             
         ''')
