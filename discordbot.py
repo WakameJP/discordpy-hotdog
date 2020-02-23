@@ -4,8 +4,9 @@ import discord
 import asyncio
 import random
 from discord.ext import commands
+import os
 
-token = "NjgwNzI5OTM1ODM2NDc5NTA2.XlEJbw.kmgrLZItaAtNCiDHvQ8bhuDvACg"
+token = os.environ['DISCORD_BOT_TOKEN']
 
 client = discord.Client()
 
