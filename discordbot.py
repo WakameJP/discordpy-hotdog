@@ -3,108 +3,115 @@ import textwrap
 import discord
 import asyncio
 import random
-import os
+from discord.ext import commands
+
+token = "NjgwNzI5OTM1ODM2NDc5NTA2.XlEJbw.kmgrLZItaAtNCiDHvQ8bhuDvACg"
 
 client = discord.Client()
-token = os.environ['DISCORD_BOT_TOKEN']
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity=discord.Game(name=',help | debug mode'))
+    await client.change_presence(activity=discord.Game(name='h?help | debug mode'))
 
     # or, for watching:
-    activity = discord.Activity(name=',help | debug mode', type=discord.ActivityType.watching)
+    activity = discord.Activity(name='h?help | debug mode', type=discord.ActivityType.watching)
     await client.change_presence(activity=activity)
 
     channel = client.get_channel(680727914614095903)
-    await channel.send('>>> **Normal Bot**が起動しました。')
-
+    await channel.send('>>> **Hotdog bot** a ready!')
 
 @client.event
-async def on_message(message):
+async def on_message(message): 
+
 
     # Bot自身が送ったメッセージの場合は処理しない
-    if message.author.bot:
-        return
+        if message.author.bot:
+            return
 
     # Helpコマンド
-    if message.content == ',help':
+        if message.content == 'h?help':
 
         # ヘルプのメッセージを作成（ヒアドキュメントを使って視覚的に見やすくしました）
-        help_msg = textwrap.dedent('''\
-            **__Normal Bot__** **Help Menu**
-            > `,create name`  チャンネルを作ることができます
-            > `,updata`  最新のアップデータ情報を確認することができます
-            > `,alldelete`実行されたチャンネルのメッセージをすべて削除します。**管理者権限必須**            
-            > `,help`  このHelpMenuです。
+                help_msg = textwrap.dedent('''\
+            **__Hotdog Bot__** **Help Menu**
+
+            > `h?help` helpメニューを表示します
+            > `h?pong` pong! と返してくれます。 **＊管理者権限が必要です。**
+            > 挨拶してみてね！( ひらがなで)
             
         ''')
 
         await message.channel.send(help_msg)
+#以下挨拶一覧
+        if message.content == 'こん':
+                await message.channel.send('こんにちは～')
+
+        if message.content == 'なにしてる？':
+                await message.channel.send('ホットドッグ食べてるよ～')    
+        if message.content == 'ひま':
+            await message.channel.send('ホットドッグ食べよう！')    
+        if message.content == 'やっほー':
+            await message.channel.send('やっほー')    
+        if message.content == 'ただいま':
+            await message.channel.send('おかえり！')        
+        if message.content == 'いってきます':
+            await message.channel.send('行ってらっしゃい！')
+        if message.content == 'ぴえん':
+            await message.channel.send('どうしたの？')
+        if message.content == 'よろしく':
+            await message.channel.send('よろしくね～')  
+        if message.content == 'いえい':
+            await message.channel.send('やったね！')        
+        if message.content == 'どんなおんがくがすき？':
+            await message.channel.send('ホットドッグの歌かなぁ')  
+        if message.content == 'かくしこまんどみつけた！':
+            await message.channel.send('みつかっちゃった！')  
+        if message.content == 'Hi':
+            await message.channel.send('こんにちは')
+        if message.content == 'www':
+            await message.channel.send('wwwwww')    
+        if message.content == 'おつ':
+            await message.channel.send('お疲れ様～')
+        if message.content == 'おはよう':
+            await message.channel.send('おはよう！')    
+        if message.content == 'ほっとどっく':
+            await message.channel.send('よんだ？')
+        if message.content == 'わかめ':
+            await message.channel.send('このBotの開発者だね！')
+        if message.content == 'ぐぅ':
+            await message.channel.send('だれそれ？') 
+        if message.content == 'なんさい？':
+            await message.channel.send('永遠のいちちゃい！')
+        if message.content == 'みどり':
+            await message.channel.send('プラグイン得意な人だ！')
+        if message.content == 'ゆき':
+            await message.channel.send('かわいいのじゃぁ～')
+        if message.content == 'くうた':
+            await message.channel.send('たべられちゃう！')
+        if message.content == 'しろいひと':
+           await message.channel.send('ふみつぶされちゃう！')      
+        if message.content == 'らっだぁ':
+            await message.channel.send('✗この発言は禁止されています')
+        if message.content == 'れもん':
+            await message.channel.send('おいしい！')
+        if message.content == 'おい':
+            await message.channel.send('こわいよぉ...')  
+        if message.content == 'しね':
+            await message.channel.send('ぴえん')  
+
+        try:
+            print(1 / 0)
+        except : KeyError
 
 
-    # Createコマンド
-    CREATE_COMMAND = ",create "
-    if message.content.startswith(CREATE_COMMAND):
 
-        # 「,create abcdef GHI」というメッセージから「abcdef GHI」のみを取り出す
-        ch_name = re.sub(CREATE_COMMAND, "", message.content)
-
-        # Discordではチャンネル名にスペースが使えないため、ハイフンに置き換える
-        ch_name = re.sub("\\s+", "-", ch_name)
-
-        # 取り出した結果が無ければ終了
-        if len(ch_name) < 1:
-            return
-
-        category = client.get_channel(605885674628841476)
-        ch = await category.create_text_channel(name=ch_name)
-        await message.channel.send(f"{ch.mention} を作成しました。")
-
-    # Create単体helpコマンド
-    if message.content == ',create':
-        await message.channel.send('`,create name` と入力することでチャンネルを作ることができます')
-
-    # updataコマンド
-    if message.content == ',updata':
-        await message.channel.send('**v1.2 Updata** \n以下のコマンドを追加しました\n>>>  `,alldel`そのチャンネルのすべてのメッセージを削除します。**管理者権限必須**')
-
-    # alldeleteコマンド 
-    if message.content == ',alldel':
-        if message.author.guild_permissions.administrator:
-            await message.channel.purge()
-            await message.channel.send('> このチャンネルのすべてのメッセージを削除しました。')
-        else:
-            await message.channel.send('> あなたはこのコマンドを実行する権限がありません！')
-
-    #運営募集コマンド
-    # news
-    if message.content == ',news':
-        
-
-        # bosyuのメッセージを作成（ヒアドキュメントを使って視覚的に見やすくしました）
-        bosyu_msg = textwrap.dedent('''\
-            **__Wakame NetWork News__** 
-            
-            >>>公式Wikiサイトを作りました！
-            こちらからアクセスできます！
-
-            ``http://bid.do/wikinet``
-
-            <@&605725636241129482>
-            
-        ''')
-        if message.author.guild_permissions.administrator:
-            await message.channel.send(bosyu_msg)
-        else:
-            await message.channel.send('> あなたはこのコマンドを実行する権限がありません！')
+#pong command
+        if message.content == 'h?pong':
+            if message.author.guild_permissions.administrator:
+                await message.channel.send('pong!')
+            else:
+                await message.channel.send('> あなたはこのコマンドを実行する権限がありません！')
 
 
-    
-    if message.content == ',kudel':
-        if message.author.guild_permissions.administrator:
-            await message.channel.send('> <@514349162519592963> のメッセージを削除しました。>')
-        else:
-            await message.channel.send('> あなたはこのコマンドを実行する権限がありません！')
 
 client.run(token)
