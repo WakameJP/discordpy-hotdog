@@ -98,7 +98,9 @@ async def on_message(message):
     if message.content == 'おい':
         await message.channel.send('こわいよぉ...')  
     if message.content == 'しね':
-        await message.channel.send('ぴえん')  
+        await message.channel.send('ぴえん') 
+    if message.content == 'h?invite':
+        await message.channel.send('招待コードはこちら！ \n> https://discordapp.com/api/oauth2/authorize?client_id=680729935836479506&permissions=8&scope=bot')  
 
     try:
             print(1 / 0)
