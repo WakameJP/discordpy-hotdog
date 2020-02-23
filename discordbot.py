@@ -12,10 +12,10 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity=discord.Game(name='h?help | v1.0.1'))
+    await client.change_presence(activity=discord.Game(name='h?help | v1.0.2'))
 
     # or, for watching:
-    activity = discord.Activity(name='h?help | v1.0.1', type=discord.ActivityType.playing)
+    activity = discord.Activity(name='h?help | v1.0.2', type=discord.ActivityType.playing)
     await client.change_presence(activity=activity)
 
     channel = client.get_channel(680727914614095903)
@@ -36,9 +36,10 @@ async def on_message(message):
         help_msg = textwrap.dedent('''\
         **__Hotdog Bot__** **Help Menu**
 
-        > `h?help` helpメニューを表示します
+        > `h?help` helpメニューを表示します。
         > `h?pong` pong! と返してくれます。 **＊管理者権限が必要です。**
         > `h?invite` ボット招待URLを表示します。
+        > `h?hp` ホームページを表示します。
         > 挨拶してみてね！( ひらがなで)
             
         ''')
@@ -102,7 +103,8 @@ async def on_message(message):
         await message.channel.send('ぴえん') 
     if message.content == 'h?invite':
         await message.channel.send('招待コードはこちら！ \n> https://discordapp.com/api/oauth2/authorize?client_id=680729935836479506&permissions=8&scope=bot')  
-
+    if message.content == 'h?hp':
+        await message.channel.send('ホームページはこちら！ \n> https://hotdog.theblog.jp')
     try:
             print(1 / 0)
     except : KeyError
