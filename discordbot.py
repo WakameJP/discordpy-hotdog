@@ -8,7 +8,7 @@ import os
 
 token = os.environ['DISCORD_BOT_TOKEN']
 
-client = discord.Client()
+client = commands.Bot(command_prefix = 'h.', help_command = None)
 
 @client.event
 async def on_ready():
@@ -33,19 +33,20 @@ async def on_message(message):
     if message.content == 'h?help':
 
         # ヘルプのメッセージを作成（ヒアドキュメントを使って視覚的に見やすくしました）
-        help_msg = textwrap.dedent('''\
-        **__Hotdog Bot__** **Help Menu**
-
-        > `h?help` helpメニューを表示します。
-        > `h?pong` pong! と返してくれます。 **＊管理者権限が必要です。**
-        > `h?invite` ボット招待URLを表示します。
-        > `h?hp` ホームページを表示します。
-        > `h?sd` サポートサーバーのURLを表示します。
-        > 挨拶してみてね！( ひらがなで)
-            
-        ''')
-
-        await message.channel.send(help_msg)
+embed=discord.Embed(title="**__Hotdog Bot__** **HelpMenu**", color=0xff8000)
+embed.add_field(name="↓権限指定なしコマンド↓", value="", inline=False)
+embed.add_field(name="h?help", value="ヘルプメニューを表示します", inline=False)
+embed.add_field(name="h?invite", value="招待を表示します", inline=False)
+embed.add_field(name="h?hp", value="ホームページを表示します", inline=False)
+embed.add_field(name="h?sd", value="サポートディスコードサーバーを表示します", inline=False)
+embed.add_field(name="色々挨拶してみてね！", value=" ", inline=False)
+embed.add_field(name="↓管理者権限のみ使用可能コマンド↓", value=" ", inline=True)
+embed.add_field(name="h.ping", value="pong!", inline=False)
+embed.add_field(name="h.kick <ID or mention> <reason>", value="対象者をkickします", inline=False)
+embed.add_field(name="h.ban <ID or mention> <reason>", value="対象者をbanします", inline=False)
+embed.add_field(name="h.unban <○○○#○○○○>", value="対象者のbanを解除します", inline=False)
+embed.add_field(name=" ", value="create by Wakame", inline=True)
+        await message.channel.send(embed=embed)
 #以下挨拶一覧
     if message.content == 'こん':
         await message.channel.send('こんにちは～')
@@ -124,6 +125,32 @@ async def on_message(message):
             await message.channel.send('pong!')
         else:
             await message.channel.send('> あなたはこのコマンドを実行する権限がありません！')
+        await client.process_commands(message)
+#kick  
+@client.command()
+@commands.has_permissions()
+async def kick(ctx, member : discord.Member, *, reason=None):
+    await member.kick(reason=reason)
+    await ctx.send(f'{member.mention}をKickしました。')
+#ban
+@client.command()
+@commands.has_permissions(administrator=True)
+async def ban(ctx, member : discord.Member, *, reason=None):
+    await member.ban(reason=reason)
+    await ctx.send(f'{member.mention}をBanしました。')
+#unban
+@client.command()
+@commands.has_permissions(administrator=True)
+async def unban(ctx, *, member):
+    banned_users = await ctx.guild.bans()
+    member_name, member_discriminator = member.split('#')[0], member.split('#')[1]
+
+    for ban_entry in banned_users:
+        user = ban_entry.user
+        if(user.name, user.discriminator) == (member_name, member_discriminator):
+            await ctx.guild.unban(user)
+            await ctx.send(f'{user.name}#{user.discriminator}のBanを解除しました。')
+            return
 
 
 
