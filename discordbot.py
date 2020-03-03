@@ -18,7 +18,7 @@ async def on_ready():
     activity = discord.Activity(name='h?help | v2.0.2', type=discord.ActivityType.playing)
     await client.change_presence(activity=activity)
 
-    channel = client.get_channel(680727914614095903)
+    channel = client.get_channel(681107735542366236)
     await channel.send('>>> **Hotdog bot** a ready!')
 
 @client.event
