@@ -8,17 +8,17 @@ import os
 
 token = os.environ['DISCORD_BOT_TOKEN']
 
-client = commands.Bot(command_prefix = 'h.', help_command = None)
+client = commands.Bot(command_prefix="h?",help_command=None)
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity=discord.Game(name='h?help | v2.0.1'))
+    await client.change_presence(activity=discord.Game(name='h?help | v2.0.2'))
 
     # or, for watching:
-    activity = discord.Activity(name='h?help | v2.0.1 ', type=discord.ActivityType.playing)
+    activity = discord.Activity(name='h?help | v2.0.2', type=discord.ActivityType.playing)
     await client.change_presence(activity=activity)
 
-    channel = client.get_channel(681107735542366236)
+    channel = client.get_channel(680727914614095903)
     await channel.send('>>> **Hotdog bot** a ready!')
 
 @client.event
@@ -28,25 +28,6 @@ async def on_message(message):
     # Bot自身が送ったメッセージの場合は処理しない
     if message.author.bot:
             return
-
-    # Helpコマンド
-    if message.content == 'h?help':
-
-        # ヘルプのメッセージを作成（ヒアドキュメントを使って視覚的に見やすくしました）
-        embed=discord.Embed(title="**__Hotdog Bot__** **HelpMenu**", color=0xff8000)
-    embed.add_field(name="↓権限指定なしコマンド↓", value="", inline=False)
-    embed.add_field(name="h?help", value="ヘルプメニューを表示します", inline=False)
-    embed.add_field(name="h?invite", value="招待を表示します", inline=False)
-    embed.add_field(name="h?hp", value="ホームページを表示します", inline=False)
-    embed.add_field(name="h?sd", value="サポートディスコードサーバーを表示します", inline=False)
-    embed.add_field(name="色々挨拶してみてね！", value=" ", inline=False)
-    embed.add_field(name="↓管理者権限のみ使用可能コマンド↓", value=" ", inline=True)
-    embed.add_field(name="h.ping", value="pong!", inline=False)
-    embed.add_field(name="h.kick <ID or mention> <reason>", value="対象者をkickします", inline=False)
-    embed.add_field(name="h.ban <ID or mention> <reason>", value="対象者をbanします", inline=False)
-    embed.add_field(name="h.unban <○○○#○○○○>", value="対象者のbanを解除します", inline=False)
-    embed.add_field(name=" ", value="create by Wakame", inline=True)
-    await message.channel.send(embed=embed)
 #以下挨拶一覧
     if message.content == 'こん':
         await message.channel.send('こんにちは～')
@@ -125,7 +106,26 @@ async def on_message(message):
             await message.channel.send('pong!')
         else:
             await message.channel.send('> あなたはこのコマンドを実行する権限がありません！')
-        await client.process_commands(message)
+    await client.process_commands(message)
+
+#help
+@client.command()
+@commands.has_permissions()
+async def help(ctx):
+        embed=discord.Embed(title="**__Hotdog Bot__** **HelpMenu**", color=0xff8000)
+        embed.add_field(name="↓権限指定なしコマンド↓", value="None", inline=False)
+        embed.add_field(name="h?help", value="ヘルプメニューを表示します", inline=False)
+        embed.add_field(name="h?invite", value="招待を表示します", inline=False)
+        embed.add_field(name="h?hp", value="ホームページを表示します", inline=False)
+        embed.add_field(name="h?sd", value="サポートディスコードサーバーを表示します", inline=False)
+        embed.add_field(name="色々挨拶してみてね！", value="None", inline=False)
+        embed.add_field(name="↓管理者権限のみ使用可能コマンド↓", value="None", inline=True)
+        embed.add_field(name="h.ping", value="pong!", inline=False)
+        embed.add_field(name="h.kick <ID or mention> <reason>", value="対象者をkickします", inline=False)
+        embed.add_field(name="h.ban <ID or mention> <reason>", value="対象者をbanします", inline=False)
+        embed.add_field(name="h.unban <○○○#○○○○>", value="対象者のbanを解除します", inline=False)
+        embed.add_field(name="None", value="v2.0.0", inline=True)
+        await ctx.send(embed=embed)
 #kick  
 @client.command()
 @commands.has_permissions()
